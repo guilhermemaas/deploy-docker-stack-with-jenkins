@@ -1,0 +1,29 @@
+pipeline {
+
+    agent any
+
+    stages {
+
+        stage('Git Checkout') {
+
+            steps {
+                sh echo "Cloning repository..."
+            }
+        }
+
+        stage('Build') {
+
+            sh echo "Building..."
+        }
+
+        stage('Tests') {
+
+            sh echo "Running tests..."
+        }
+
+        stage('Deploy') {
+
+            sh echo "Deploying on QA Server..."
+        }
+    }
+}
