@@ -3,27 +3,25 @@ pipeline {
     agent any
 
     stages {
-
         stage('Git Checkout') {
-
             steps {
-                sh echo "Cloning repository..."
+                echo 'Cloning repository...'
             }
         }
-
         stage('Build') {
-
-            sh echo "Building..."
+            steps {
+                echo 'Building...'
+            }
         }
-
         stage('Tests') {
-
-            sh echo "Running tests..."
+            steps {
+                echo 'Testing...'
+            }
         }
-
         stage('Deploy') {
-
-            sh echo "Deploying on QA Server..."
+            steps {
+                echo 'Deploying...'
+            }
         }
     }
 }
