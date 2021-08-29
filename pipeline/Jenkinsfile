@@ -8,6 +8,7 @@ pipeline {
                 echo 'Listing Docker Swarm stacks:'
                 sh 'ls -lha'
                 sh 'pwd'
+                sh 'docker stack ls'
             }
         }
         stage('Build') {
