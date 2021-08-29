@@ -1,3 +1,5 @@
+def gv
+
 pipeline {
 
     agent { node { label 'docker' } }
@@ -5,26 +7,24 @@ pipeline {
     parameters {
         choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
         booleanParam(name: 'executeTests', defaultValue: true, description: '')
-   
+    }
+        
     stages {
-        stage('Init') {
-            steps {
-                echo 'Listing Docker Swarm stacks:'
-                sh 'ls -lha'
-                sh 'pwd'
-                sh 'docker stack ls'
-                script {
-                    gv = load 'script.groovy'
-            }
-        }
-        stage('Build') {
+        stage("init") {
             steps {
                 script {
-                    gv.buildApp()   
+                   gv = load "script.groovy" 
                 }
             }
         }
-        stage('Test') {
+        stage("build") {
+            steps {
+                script {
+                    gv.buildApp()
+                }
+            }
+        }
+        stage("test") {
             when {
                 expression {
                     params.executeTests
@@ -36,12 +36,12 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+        stage("deploy") {
             steps {
                 script {
-                    gv.executeTests()   
+                    gv.deployApp()
                 }
             }
         }
-    }
+    }   
 }
