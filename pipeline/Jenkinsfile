@@ -1,6 +1,6 @@
 pipeline {
 
-    agent Ubuntu
+    agent node('Ubuntu'){}
 
     stages {
         stage('Git Checkout') {
