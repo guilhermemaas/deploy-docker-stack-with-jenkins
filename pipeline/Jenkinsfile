@@ -6,7 +6,8 @@ pipeline {
         stage('Git Checkout') {
             steps {
                 echo 'Listing Docker Swarm stacks:'
-                sh docker stack ls
+                sh ls -lha
+                sh pwd
             }
         }
         stage('Build') {
