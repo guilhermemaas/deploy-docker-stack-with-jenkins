@@ -7,27 +7,40 @@ pipeline {
         booleanParam(name: 'executeTests', defaultValue: true, description: '')
    
     stages {
-        stage('Git Checkout') {
+        stage('Init') {
             steps {
                 echo 'Listing Docker Swarm stacks:'
                 sh 'ls -lha'
                 sh 'pwd'
                 sh 'docker stack ls'
+                script {
+                    gv = load 'script.groovy'
             }
         }
         stage('Build') {
             steps {
-                echo 'Building...'
+                script {
+                    gv.buildApp()   
+                }
             }
         }
-        stage('Tests') {
+        stage('Test') {
+            when {
+                expression {
+                    params.executeTests
+                }
+            }
             steps {
-                echo 'Testing...'
+                script {
+                    gv.testApp()
+                }
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying...'
+                script {
+                    gv.executeTests()   
+                }
             }
         }
     }
